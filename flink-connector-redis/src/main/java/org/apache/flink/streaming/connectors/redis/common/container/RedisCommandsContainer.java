@@ -43,6 +43,16 @@ public interface RedisCommandsContainer extends Serializable {
     void hset(String key, String hashField, String value);
 
     /**
+     * Sets field in the hash stored at key to value.
+     * If key does not exist, a new key holding a hash is created.
+     * If field already exists in the hash, it is overwritten.
+     *
+     * @param key Hash name
+     * @param hashField Hash field
+     */
+    void hdel(String key, String hashField);
+
+    /**
      * Insert the specified value at the tail of the list stored at key.
      * If key does not exist, it is created as empty list before performing the push operation.
      *

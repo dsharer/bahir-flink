@@ -119,7 +119,7 @@ This section gives a description of all the available data types and what Redis 
       </thead>
       <tbody>
         <tr>
-            <td>HASH</td><td><a href="http://redis.io/commands/hset">HSET</a></td>
+            <td>HASH</td><td><a href="http://redis.io/commands/hset">HSET, HDEL</a></td>
         </tr>
         <tr>
             <td>LIST</td><td>

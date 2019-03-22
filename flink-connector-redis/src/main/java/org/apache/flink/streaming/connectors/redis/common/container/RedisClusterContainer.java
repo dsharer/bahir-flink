@@ -70,6 +70,19 @@ public class RedisClusterContainer implements RedisCommandsContainer, Closeable 
     }
 
     @Override
+    public void hdel(final String key, final String hashField) {
+        try {
+            jedisCluster.hdel(key, hashField);
+        } catch (Exception e) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Cannot send Redis message with command HDEL to remove key {} from hashField {} error message {}",
+                        key, hashField, e.getMessage());
+            }
+            throw e;
+        }
+    }
+
+    @Override
     public void rpush(final String listName, final String value) {
         try {
             jedisCluster.rpush(listName, value);
