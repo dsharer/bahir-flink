@@ -32,6 +32,7 @@ public class FlinkJedisPoolConfig extends FlinkJedisConfigBase {
     private final int port;
     private final int database;
     private final String password;
+    private final boolean useSsl;
 
 
     /**
@@ -48,7 +49,7 @@ public class FlinkJedisPoolConfig extends FlinkJedisConfigBase {
      * @param minIdle the minimum number of idle objects to maintain in the pool, default value is 0
      * @throws NullPointerException if parameter {@code host} is {@code null}
      */
-    private FlinkJedisPoolConfig(String host, int port, int connectionTimeout, String password, int database,
+    private FlinkJedisPoolConfig(String host, int port, int connectionTimeout, String password, int database, boolean useSsl,
                                 int maxTotal, int maxIdle, int minIdle) {
         super(connectionTimeout, maxTotal, maxIdle, minIdle);
         Objects.requireNonNull(host, "Host information should be presented");
@@ -56,6 +57,7 @@ public class FlinkJedisPoolConfig extends FlinkJedisConfigBase {
         this.port = port;
         this.database = database;
         this.password = password;
+        this.useSsl = useSsl;
     }
 
     /**
@@ -95,6 +97,8 @@ public class FlinkJedisPoolConfig extends FlinkJedisConfigBase {
         return password;
     }
 
+    public boolean getUseSsl() { return useSsl; }
+
     /**
      * Builder for initializing  {@link FlinkJedisPoolConfig}.
      */
@@ -103,6 +107,7 @@ public class FlinkJedisPoolConfig extends FlinkJedisConfigBase {
         private int port = Protocol.DEFAULT_PORT;
         private int timeout = Protocol.DEFAULT_TIMEOUT;
         private int database = Protocol.DEFAULT_DATABASE;
+        private boolean useSsl = false;
         private String password;
         private int maxTotal = GenericObjectPoolConfig.DEFAULT_MAX_TOTAL;
         private int maxIdle = GenericObjectPoolConfig.DEFAULT_MAX_IDLE;
@@ -199,6 +204,11 @@ public class FlinkJedisPoolConfig extends FlinkJedisConfigBase {
             return this;
         }
 
+        public Builder setUseSsl(boolean useSsl) {
+            this.useSsl = useSsl;
+            return this;
+        }
+
 
         /**
          * Builds JedisPoolConfig.
@@ -206,7 +216,7 @@ public class FlinkJedisPoolConfig extends FlinkJedisConfigBase {
          * @return JedisPoolConfig
          */
         public FlinkJedisPoolConfig build() {
-            return new FlinkJedisPoolConfig(host, port, timeout, password, database, maxTotal, maxIdle, minIdle);
+            return new FlinkJedisPoolConfig(host, port, timeout, password, database, useSsl, maxTotal, maxIdle, minIdle);
         }
     }
 
@@ -217,6 +227,7 @@ public class FlinkJedisPoolConfig extends FlinkJedisConfigBase {
             ", port=" + port +
             ", timeout=" + connectionTimeout +
             ", database=" + database +
+            ", useSsl=" + useSsl +
             ", maxTotal=" + maxTotal +
             ", maxIdle=" + maxIdle +
             ", minIdle=" + minIdle +

@@ -69,7 +69,7 @@ public class RedisCommandsContainerBuilder {
 
         JedisPool jedisPool = new JedisPool(genericObjectPoolConfig, jedisPoolConfig.getHost(),
             jedisPoolConfig.getPort(), jedisPoolConfig.getConnectionTimeout(), jedisPoolConfig.getPassword(),
-            jedisPoolConfig.getDatabase());
+            jedisPoolConfig.getDatabase(), jedisPoolConfig.getUseSsl());
         return new RedisContainer(jedisPool);
     }
 
